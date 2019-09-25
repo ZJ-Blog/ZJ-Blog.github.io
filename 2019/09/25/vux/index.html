@@ -3,20 +3,20 @@
 <head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="utf-8">
   
-  <title>hexo + github 搭建个人博客 | ZJ-Blog</title>
+  <title>关于vux使用心得 | ZJ-Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="hexo搭建博客分享转载于 (http://hotpotlife.online/)">
-<meta name="keywords" content="hexo + github 搭建个人博客">
+  <meta name="description" content="分享下自己在使用vux时遇到的一些问题">
+<meta name="keywords" content="关于vux使用心得">
 <meta property="og:type" content="article">
-<meta property="og:title" content="hexo + github 搭建个人博客">
-<meta property="og:url" content="http://yoursite.com/2019/09/23/hello-world/index.html">
+<meta property="og:title" content="关于vux使用心得">
+<meta property="og:url" content="http://yoursite.com/2019/09/25/vux/index.html">
 <meta property="og:site_name" content="ZJ-Blog">
-<meta property="og:description" content="hexo搭建博客分享转载于 (http://hotpotlife.online/)">
+<meta property="og:description" content="分享下自己在使用vux时遇到的一些问题">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-09-25T03:03:53.098Z">
+<meta property="og:updated_time" content="2019-09-25T06:34:53.205Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="hexo + github 搭建个人博客">
-<meta name="twitter:description" content="hexo搭建博客分享转载于 (http://hotpotlife.online/)">
+<meta name="twitter:title" content="关于vux使用心得">
+<meta name="twitter:description" content="分享下自己在使用vux时遇到的一些问题">
   
     <link rel="alternative" href="/atom.xml" title="ZJ-Blog" type="application/atom+xml">
   
@@ -210,11 +210,11 @@
         </header>                
     </div>
 </nav>
-      <div class="body-wrap"><article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-vux" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2019/09/23/hello-world/" class="article-date">
-      <time datetime="2019-09-23T09:42:18.111Z" itemprop="datePublished">2019-09-23</time>
+      <a href="/2019/09/25/vux/" class="article-date">
+      <time datetime="2019-09-25T02:46:29.000Z" itemprop="datePublished">2019-09-25</time>
 </a>
     </div>
   
@@ -227,7 +227,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      hexo + github 搭建个人博客
+      关于vux使用心得
     </h1>
   
 
@@ -238,7 +238,7 @@
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo-github-搭建个人博客/">hexo + github 搭建个人博客</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/关于vux使用心得/">关于vux使用心得</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -248,7 +248,17 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>hexo搭建博客分享<br>转载于 (<a href="http://hotpotlife.online/" target="_blank" rel="noopener">http://hotpotlife.online/</a>)</p>
+        <a id="more"></a>
+<p>vux是一款非常好用的vue框架ui组件，vux的安装配置和使用请参照<a href="https://doc.vux.li/zh-CN/" target="_blank" rel="noopener">vux</a>官网配置</p>
+<h3 id="使用版本"><a href="#使用版本" class="headerlink" title="使用版本"></a>使用版本</h3><pre><code>vux v2.9.4, vux-loader v1.2.9, vue v2.6.10, vue-loader v14.2.3</code></pre><p>这里主要讲下我使用vux遇到的一些问题</p>
+<h3 id="按需引入问题"><a href="#按需引入问题" class="headerlink" title="按需引入问题"></a>按需引入问题</h3><ul>
+<li>vux由于打包体积过大，所以需要按需引用，当组件以插件形式全局调用的时候，如果在main.js进行全局注册会导致按需引入失败，这是因为vux当前版本和最新的vue-loader中使用的webpack版本不一样，<br>导致不兼容。</li>
+<li>我的解决办法是将vux组件的全局注册方法放在App.vue文件中<h3 id="全局引入含变量的样式文件"><a href="#全局引入含变量的样式文件" class="headerlink" title="全局引入含变量的样式文件"></a>全局引入含变量的样式文件</h3></li>
+<li>项目中经常会新建一个样式文件来定义项目的风格以及常用的变量，这样的样式文件在main.js中全局引入没有效果</li>
+<li>解决方法: 在vue.config.js中进行配置，配置图如下<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"> configureWebpack: <span class="function"><span class="params">config</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">require</span>(<span class="string">'vux-loader'</span>).merge(config, &#123;</span><br><span class="line">    options: &#123;&#125;,</span><br><span class="line">    plugins: [</span><br><span class="line">      &#123;</span><br><span class="line">        name: <span class="string">'less-theme'</span>,</span><br><span class="line">        path: <span class="string">'src/assets/css/theme.less'</span> <span class="comment">//样式文件的路径</span></span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
 
       
       
@@ -304,13 +314,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2019/09/23/hello-world/">hexo + github 搭建个人博客</a></p>
+        <p><span>本文标题:</span><a href="/2019/09/25/vux/">关于vux使用心得</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 ZJ 的个人博客">ZJ</a></p>
-        <p><span>发布时间:</span>2019年09月23日 - 17时42分</p>
-        <p><span>最后更新:</span>2019年09月25日 - 11时03分</p>
+        <p><span>发布时间:</span>2019年09月25日 - 10时46分</p>
+        <p><span>最后更新:</span>2019年09月25日 - 14时34分</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2019/09/23/hello-world/" title="hexo + github 搭建个人博客">http://yoursite.com/2019/09/23/hello-world/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2019/09/23/hello-world/　　作者: ZJ" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2019/09/25/vux/" title="关于vux使用心得">http://yoursite.com/2019/09/25/vux/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2019/09/25/vux/　　作者: ZJ" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script src="/js/clipboard.min.js"></script>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
@@ -323,15 +333,11 @@
 
 <nav id="article-nav">
   
-    <a href="/2019/09/25/vux/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          关于vux使用心得
-        
-      </div>
-    </a>
   
+    <a href="/2019/09/23/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">hexo + github 搭建个人博客</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
   
 </nav>
 
@@ -340,7 +346,7 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用版本"><span class="toc-number">1.</span> <span class="toc-text">使用版本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#按需引入问题"><span class="toc-number">2.</span> <span class="toc-text">按需引入问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#全局引入含变量的样式文件"><span class="toc-number">3.</span> <span class="toc-text">全局引入含变量的样式文件</span></a></li></ol>
 </div>
 <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
 
@@ -406,13 +412,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2019/09/25/vux/" title="上一篇: 关于vux使用心得">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
         
-            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+            <a href="/2019/09/23/hello-world/" title="下一篇: hexo + github 搭建个人博客">
+                <i class="fa fa-angle-right"></i>
+            </a>
         
     </div>
     <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/09/25/vux/">关于vux使用心得</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/23/hello-world/">hexo + github 搭建个人博客</a></li></ul>
